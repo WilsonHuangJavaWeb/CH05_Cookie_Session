@@ -1,39 +1,81 @@
-<%--
+<%@ page import="com.sun.xml.internal.bind.v2.model.core.ID" %><%--
   Created by IntelliJ IDEA.
-  User: ki264
+  User: WilsonHuang
   Date: 2017/6/8
-  Time: 下午 05:04
+  Time: 22:21
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" errorPage="login.jsp" pageEncoding="utf-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" errorPage="login.jsp" %>
 <%
-    request.setCharacterEncoding("UTF-8");
+    String username = "";
+    String password = "";
+    int visitTimes = 0;
 
-    String userName = "";//使用者名稱
-    int visitTimes = 0;//存取次數
-    Cookie[] cookies = request.getCookies();//取得所有Cookie
+    Cookie[] cookies = request.getCookies();
 
-    //檢查所有Cookie，尋找帳號與登入次數
     for (int i = 0; cookies != null && i < cookies.length; i++) {
-        Cookie cookie = cookies[i];//第i個Cookie
-        if ("userName".equals(cookie.getName())) {
-            userName = cookie.getValue();
-        } else if ("visitTime".equals(cookie.getName())) {
+        Cookie cookie = cookies[i];
+        if ("username".equals(cookie.getName())) {
+            username = cookie.getValue();
+        } else if ("visitTimes".equals(cookie.getName())) {
             visitTimes = Integer.parseInt(cookie.getValue());
+        } else if ("password".equals(cookie.getName())) {
+            password = cookie.getValue();
         }
     }
-
-    if (userName == null || userName.trim().equals("")) {
-        throw new Exception("尚未登入，請先登入。");
+    if (username == null || username.trim().equals("")) {
+        throw new Exception("還有沒有登入，請先登入。");
     }
+
     Cookie visitTimesCookie = new Cookie("visitTimes", Integer.toString(++visitTimes));
     response.addCookie(visitTimesCookie);
+
 %>
 <html>
 <head>
-    <title>登入資訊</title>
+    <title>cookie</title>
+    <meta http-equiv="pargma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="This is my page">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
+<div align="center" style="margin: 10px;">
+    <fieldset>
+        <legend>登入資訊</legend>
+        <form action="login.jsp" method="post">
+            <table>
+                <tr>
+                    <td>帳號：
+                    </td>
+                    <td>
+                        <%=username%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>密碼：</td>
+                    <td><%=password%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>登入次數：</td>
+                    <td><%=visitTimes%>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="button" value="刷新"
+                               onclick="location='<%=request.getRequestURL()%>?ts='+new Date().getTime();"
+                               class="button">
+                    </td>
+                </tr>
+            </table>
 
+        </form>
+    </fieldset>
+</div>
 </body>
 </html>
