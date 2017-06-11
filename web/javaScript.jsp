@@ -31,21 +31,26 @@
 
         //設定Cookie
         function setCookie(name, value) {
-            var expires = (arguments.length > 2) ? arguments[2] : null;//判斷expires屬性
-            var path = (arguments > 3) ? arguments[3] : null;//判斷path屬性
-            var domain = (arguments > 4) ? arguments[4] : null;//判斷domain屬性
-            var secure = (arguments > 5) ? arguments[5] : null;//判斷secure屬性
-
-            //設定Cookie屬性
-            document.cookie = name
-                + "="
-                + encodeURI(value)
-                + ((expires == null) ? "" : (";expries=" + expires.toGMTString()))
-                + ((path == null) ? "" : (";path=" + path))
-                + ((domain == null) ? "" : (";domain=" + domain))
-                + ((secure == null) ? ";secure" : "");
-
+            document.cookie = name + "=" + encodeURI(value);
         }
+
+        //        //設定Cookie
+        //        function setCookie(name, value) {
+        //            var expires = (arguments.length > 2) ? arguments[2] : null;//判斷expires屬性
+        //            var path = (arguments > 3) ? arguments[3] : null;//判斷path屬性
+        //            var domain = (arguments > 4) ? arguments[4] : null;//判斷domain屬性
+        //            var secure = (arguments > 5) ? arguments[5] : null;//判斷secure屬性
+        //
+        //            //設定Cookie屬性
+        //            document.cookie = name
+        //                + "="
+        //                + encodeURI(value)
+        //                + ((expires == null) ? "" : (";expries=" + expires.toGMTString()))
+        //                + ((path == null) ? "" : (";path=" + path))
+        //                + ((domain == null) ? "" : (";domain=" + domain))
+        //                + ((secure == null) ? ";secure" : "");
+        //
+        //        }
 
     </script>
 </head>
